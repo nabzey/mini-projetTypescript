@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: ts-app-v1
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    command: sh -c "npx tsc && node dist/index.js"
