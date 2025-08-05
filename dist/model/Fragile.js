@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Fragile = void 0;
-const Materiel_1 = require("./Materiel");
-class Fragile extends Materiel_1.Materiel {
+import { Materiel } from './Materiel.js';
+export class Fragile extends Materiel {
     constructor(libelle, poids) {
         super(libelle, poids);
     }
@@ -14,4 +11,3 @@ class Fragile extends Materiel_1.Materiel {
         console.log(`Ne peut être transporté`);
     }
 }
-exports.Fragile = Fragile;

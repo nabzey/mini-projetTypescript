@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Produit = void 0;
-class Produit {
+export class Produit {
     constructor(libelle, poids) {
         this.libelle = libelle;
         this.poids = poids;
@@ -24,4 +21,3 @@ class Produit {
         }
     }
 }
-exports.Produit = Produit;

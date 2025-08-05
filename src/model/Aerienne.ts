@@ -1,8 +1,8 @@
-import { Alimentaire } from "./Alimentaire";
-import{ Cargaison } from "./Cargaison";
-import { Chimique } from "./Chimique";
-import { Materiel } from "./Materiel";
-import { Produit } from "./Produit";
+import { Alimentaire } from "./Alimentaire.js";
+import{ Cargaison } from "./Cargaison.js";
+import { Chimique } from "./Chimique.js";
+import { Materiel } from "./Materiel.js";
+import { Produit } from "./Produit.js";
 
   export class Aerienne extends Cargaison{
 
@@ -15,7 +15,10 @@ constructor(distance: number) {
             console.log("Cargaison pleine, impossible d'ajouter le produit");
             return;
         }
-
+      if (produit instanceof Chimique) {
+      console.log(" Produit chimique non autorisé en cargaison Aerienne!");
+      return;
+    }
         this.ajouterProduitBase(produit);
     }
 

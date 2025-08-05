@@ -1,11 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Routiere = void 0;
-const Alimentaire_1 = require("./Alimentaire");
-const Cargaison_1 = require("./Cargaison");
-const Chimique_1 = require("./Chimique");
-const Materiel_1 = require("./Materiel");
-class Routiere extends Cargaison_1.Cargaison {
+import { Alimentaire } from "./Alimentaire.js";
+import { Cargaison } from "./Cargaison.js";
+import { Chimique } from "./Chimique.js";
+import { Materiel } from "./Materiel.js";
+export class Routiere extends Cargaison {
     constructor(distance) {
         super(distance);
     }
@@ -14,24 +11,27 @@ class Routiere extends Cargaison_1.Cargaison {
             console.log("Cargaison pleine, impossible d'ajouter le produit");
             return;
         }
+        if (produit instanceof Chimique) {
+            console.log("Produit chimique non autorisé en cargaison routiere !");
+            return;
+        }
         this.ajouterProduitBase(produit);
     }
     calculerFrais(produit) {
         let tarifParKgKm = 0;
         let fraisChargement = 0;
-        if (produit instanceof Chimique_1.Chimique) {
+        if (produit instanceof Chimique) {
             tarifParKgKm = 300;
             fraisChargement = 5000;
         }
-        else if (produit instanceof Alimentaire_1.Alimentaire) {
+        else if (produit instanceof Alimentaire) {
             tarifParKgKm = 200;
             fraisChargement = 0;
         }
-        else if (produit instanceof Materiel_1.Materiel) {
+        else if (produit instanceof Materiel) {
             tarifParKgKm = 150;
             fraisChargement = 0;
         }
         return (tarifParKgKm * produit.getPoids() * this.getDistance()) + fraisChargement;
     }
 }
-exports.Routiere = Routiere;

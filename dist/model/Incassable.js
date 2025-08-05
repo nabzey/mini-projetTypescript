@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Incassable = void 0;
-const Materiel_1 = require("./Materiel");
-class Incassable extends Materiel_1.Materiel {
+import { Materiel } from './Materiel.js';
+export class Incassable extends Materiel {
     constructor(libelle, poids) {
         super(libelle, poids);
     }
@@ -14,4 +11,3 @@ class Incassable extends Materiel_1.Materiel {
         console.log(`Peut être transporté par voie maritime (1-9 jours)`);
     }
 }
-exports.Incassable = Incassable;

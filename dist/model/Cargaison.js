@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Cargaison = void 0;
-class Cargaison {
+export class Cargaison {
     constructor(distance) {
         this.produits = [];
         this.fraisTransport = 0;
@@ -55,5 +52,4 @@ class Cargaison {
         return true;
     }
 }
-exports.Cargaison = Cargaison;
 Cargaison.MAX_PRODUIT = 10;

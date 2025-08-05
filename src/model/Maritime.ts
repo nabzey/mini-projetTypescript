@@ -1,9 +1,9 @@
-import { Alimentaire } from "./Alimentaire";
-import{ Cargaison } from "./Cargaison";
-import { Chimique } from "./Chimique";
-import { Fragile } from "./Fragile";
-import { Materiel } from "./Materiel";
-import { Produit } from "./Produit";
+import { Alimentaire } from "./Alimentaire.js";
+import{ Cargaison } from "./Cargaison.js";
+import { Chimique } from "./Chimique.js";
+import { Fragile } from "./Fragile.js";
+import { Materiel } from "./Materiel.js";
+import { Produit } from "./Produit.js";
   export class Maritime extends Cargaison{
  
     constructor(distance:number){
@@ -15,11 +15,11 @@ import { Produit } from "./Produit";
       console.log("cargaison est :");
       return
      }
-
      if (produit instanceof  Fragile){
       console.log("produit fragile")
       return
      }
+
      this.ajouterProduitBase(produit)
     }
     calculerFrais(produit: Produit): number {

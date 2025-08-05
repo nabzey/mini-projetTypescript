@@ -1,64 +1,106 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-// Imports nécessaires
-const Maritime_1 = require("./model/Maritime");
-const Aerienne_1 = require("./model/Aerienne");
-const Routiere_1 = require("./model/Routiere");
-const Alimentaire_1 = require("./model/Alimentaire");
-const Chimique_1 = require("./model/Chimique");
-const Fragile_1 = require("./model/Fragile");
-const Incassable_1 = require("./model/Incassable");
-console.log("SYSTÈME DE GESTION DE CARGAISONS\n");
-// Création des cargaisons
-const cargaisonMaritime = new Maritime_1.Maritime(100); // 100 km
-const cargaisonAerienne = new Aerienne_1.Aerienne(500); // 500 km
-const cargaisonRoutiere = new Routiere_1.Routiere(200); // 200 km
-// Création des produits
-const produitAlim1 = new Alimentaire_1.Alimentaire("Pommes", 10);
-const produitAlim2 = new Alimentaire_1.Alimentaire("Riz", 25);
-const produitChim1 = new Chimique_1.Chimique(5, "Acide sulfurique", 8);
-const produitChim2 = new Chimique_1.Chimique(15, "Détergent", 3);
-const produitFragile1 = new Fragile_1.Fragile("Verres", 8);
-const produitFragile2 = new Fragile_1.Fragile("Miroirs", 12);
-const produitIncassable1 = new Incassable_1.Incassable("Outils métalliques", 20);
-const produitIncassable2 = new Incassable_1.Incassable("Pièces mécaniques", 30);
-console.log("TEST CARGAISON MARITIME");
-cargaisonMaritime.ajouterProduit(produitAlim1);
-cargaisonMaritime.ajouterProduit(produitChim1);
-cargaisonMaritime.ajouterProduit(produitIncassable1);
-cargaisonMaritime.ajouterProduit(produitFragile1); // Doit être refusé
-console.log(`Montant total cargaison maritime: ${cargaisonMaritime.sommeTotale()}F`);
-console.log(`Nombre de produits: ${cargaisonMaritime.nbProduit()}\n`);
-console.log("TEST CARGAISON AÉRIENNE");
-cargaisonAerienne.ajouterProduit(produitAlim2);
-cargaisonAerienne.ajouterProduit(produitChim2);
-cargaisonAerienne.ajouterProduit(produitFragile2); // Accepté
-console.log(`Montant total cargaison aérienne: ${cargaisonAerienne.sommeTotale()}F`);
-console.log(`Nombre de produits: ${cargaisonAerienne.nbProduit()}\n`);
-console.log("TEST CARGAISON ROUTIÈRE");
-cargaisonRoutiere.ajouterProduit(produitIncassable2);
-cargaisonRoutiere.ajouterProduit(new Alimentaire_1.Alimentaire("Pâtes", 5));
-console.log(`Montant total cargaison routière: ${cargaisonRoutiere.sommeTotale()}F`);
-console.log(`Nombre de produits: ${cargaisonRoutiere.nbProduit()}\n`);
-console.log("INFORMATIONS DES PRODUITS");
-produitAlim1.info();
-console.log();
-produitChim1.info();
-console.log();
-produitFragile1.info();
-console.log();
-produitIncassable1.info();
-console.log();
-console.log("TEST DES CONTRAINTES");
-console.log("Test de cargaison pleine:");
-const cargaisonTest = new Aerienne_1.Aerienne(50);
-for (let i = 0; i < 12; i++) { // Essayer d'ajouter 12 produits (limite = 10)
-    cargaisonTest.ajouterProduit(new Alimentaire_1.Alimentaire(`Produit ${i + 1}`, 1));
+import { Maritime } from './model/Maritime.js';
+import { Aerienne } from './model/Aerienne.js';
+import { Routiere } from './model/Routiere.js';
+import { Alimentaire } from './model/Alimentaire.js';
+import { Chimique } from './model/Chimique.js';
+import { Fragile } from './model/Fragile.js';
+import { Incassable } from './model/Incassable.js';
+let cargaison = null;
+const btnCargaison = document.getElementById('create-cargaison');
+const typeCargaison = document.getElementById('type-cargaison');
+const distanceInput = document.getElementById('distance');
+const produitSection = document.getElementById('produit-section');
+const typeProduit = document.getElementById('type-produit');
+const nomProduit = document.getElementById('nom-produit');
+const poidsProduit = document.getElementById('poids-produit');
+const toxiciteInput = document.getElementById('toxicite');
+const ajouterProduitBtn = document.getElementById('ajouter-produit');
+const listeProduits = document.getElementById('liste-produits');
+const totalSpan = document.getElementById('total');
+const nbProduitsSpan = document.getElementById('nb-produits');
+// Créer une cargaison
+btnCargaison.addEventListener('click', () => {
+    const type = typeCargaison.value;
+    const distance = parseFloat(distanceInput.value);
+    if (isNaN(distance)) {
+        alert("Veuillez entrer une distance valide.");
+        return;
+    }
+    cargaison =
+        type === 'maritime'
+            ? new Maritime(distance)
+            : type === 'aerienne'
+                ? new Aerienne(distance)
+                : new Routiere(distance);
+    produitSection.style.display = 'block';
+    updateAffichage();
+});
+// Gérer l’affichage du champ toxicité
+typeProduit.addEventListener('change', () => {
+    const type = typeProduit.value;
+    toxiciteInput.style.display = type === 'chimique' ? 'inline-block' : 'none';
+});
+// Ajouter un produit
+ajouterProduitBtn.addEventListener('click', () => {
+    if (!cargaison)
+        return;
+    const nom = nomProduit.value.trim();
+    const poids = parseFloat(poidsProduit.value);
+    const type = typeProduit.value;
+    if (!nom || isNaN(poids)) {
+        alert("Veuillez remplir correctement les champs du produit.");
+        return;
+    }
+    let produit;
+    try {
+        // Créer le produit selon le type
+        if (type === 'alimentaire') {
+            produit = new Alimentaire(nom, poids);
+        }
+        else if (type === 'chimique') {
+            const toxicite = parseInt(toxiciteInput.value);
+            if (isNaN(toxicite) || toxicite < 1 || toxicite > 5) {
+                alert("Le degré de toxicité doit être entre 1 et 5.");
+                return;
+            }
+            produit = new Chimique(poids, nom, toxicite);
+        }
+        else if (type === 'fragile') {
+            produit = new Fragile(nom, poids);
+        }
+        else {
+            produit = new Incassable(nom, poids);
+        }
+        cargaison.ajouterProduit(produit);
+        updateAffichage();
+        resetFormulaire();
+    }
+    catch (e) {
+        if (e instanceof Error) {
+            alert(e.message);
+        }
+        else {
+            console.error("Erreur inconnue : ", e);
+        }
+    }
+});
+function updateAffichage() {
+    if (!cargaison)
+        return;
+    listeProduits.innerHTML = "";
+    cargaison.getProduit().forEach((p) => {
+        const li = document.createElement('li');
+        li.textContent = `${p.getLibelle()} (${p.constructor.name}) - ${p.getPoids()}kg`;
+        listeProduits.appendChild(li);
+    });
+    totalSpan.textContent = cargaison.sommeTotale().toString();
+    nbProduitsSpan.textContent = cargaison.nbProduit().toString();
 }
-console.log("\nTest degré de toxicité invalide:");
-try {
-    new Chimique_1.Chimique(1, "Produit toxique", 15); // Degré > 10
-}
-catch (error) {
-    console.log(error);
+// Réinitialiser les champs du formulaire produit
+function resetFormulaire() {
+    nomProduit.value = "";
+    poidsProduit.value = "";
+    toxiciteInput.value = "";
+    typeProduit.selectedIndex = 0;
+    toxiciteInput.style.display = 'none';
 }

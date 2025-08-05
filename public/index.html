@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gestion de Cargaisons</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans p-6">
+
+  <h1 class="text-3xl font-bold text-center mb-10 text-blue-700">Gestion de Cargaisons</h1>
+
+  <section class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 mb-8">
+    <h2 class="text-xl font-semibold mb-4">Choisir un type de cargaison</h2>
+    <select id="type-cargaison" class="w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <option value="maritime">Maritime</option>
+      <option value="aerienne">Aérienne</option>
+      <option value="routiere">Routière</option>
+    </select>
+    <input type="number" id="distance" placeholder="Distance (km)" class="w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    <button id="create-cargaison" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition duration-200">Créer</button>
+  </section>
+
+  <section id="produit-section" class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 mb-8 hidden">
+    <h2 class="text-xl font-semibold mb-4">Ajouter un produit</h2>
+    <select id="type-produit" class="w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <option value="alimentaire">Alimentaire</option>
+      <option value="chimique">Chimique</option>
+      <option value="fragile">Fragile</option>
+      <option value="incassable">Incassable</option>
+    </select>
+    <input type="text" id="nom-produit" placeholder="Nom du produit" class="w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    <input type="number" id="poids-produit" placeholder="Poids (kg)" class="w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    <input type="number" id="toxicite" placeholder="Toxicité (chimique)" class="w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 hidden" />
+    <button id="ajouter-produit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded transition duration-200">Ajouter</button>
+  </section>
+
+  <section class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+    <h2 class="text-xl font-semibold mb-4">Produits dans la cargaison</h2>
+    <ul id="liste-produits" class="border border-gray-300 rounded max-h-60 overflow-y-auto mb-4">
+      <!-- Liste des produits ici -->
+    </ul>
+    <p class="mb-1"><strong>Montant total :</strong> <span id="total">0</span> F</p>
+    <p><strong>Nombre de produits :</strong> <span id="nb-produits">0</span></p>
+  </section>
+  
+  <script type="module" src="../dist/test.js"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-import { Produit } from './Produit';
+import { Produit } from './Produit.js';
 
 export abstract class Cargaison {
     private produits: Produit[] = [];

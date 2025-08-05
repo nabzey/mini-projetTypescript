@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Chimique = void 0;
-const Produit_1 = require("./Produit");
-class Chimique extends Produit_1.Produit {
+import { Produit } from './Produit.js';
+export class Chimique extends Produit {
     constructor(toxicite, libelle, poids) {
         super(libelle, poids);
         this.toxicite = toxicite;
@@ -26,4 +23,3 @@ class Chimique extends Produit_1.Produit {
         console.log(`Degré de toxicité: ${this.toxicite}/10`);
     }
 }
-exports.Chimique = Chimique;
